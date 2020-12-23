@@ -27,10 +27,12 @@ def markdownToHtml():
     with open("{}".format(markdownFile), "r") as markdown:
         with open("{}".format(outputFile), "w+") as html:
             for line in markdown.read().split("\n"):
+                aux_text = text
                 text = titles(text, line)
                 text, flag_ul = ul(text, line, flag_ul)
                 text, flag_ol = ol(text, line, flag_ol)
-                text, flag_p = p(text, line, flag_p)
+                if aux_text == text:
+                    text, flag_p = p(text, line, flag_p)
 
             html.write(text)
 
