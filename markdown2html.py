@@ -21,6 +21,7 @@ def markdownToHtml():
         sys.exit(1)
 
     headingsHtml = ["<h1>", "<h2>", "<h3>", "<h4>", "<h5>", "<h6>"]
+    headingsHtmlClose = ["</h1>", "</h2>", "</h3>", "</h4>", "</h5>", "</h6>"]
     headingsMarkdown = ["# ", "## ", "### ", "#### ", "##### ", "###### "]
 
     text = ""
@@ -31,7 +32,7 @@ def markdownToHtml():
                     if headingsMarkdown[i] in line:
                         text += line.replace(
                             headingsMarkdown[i], headingsHtml[i])
-                        text += headingsHtml[i] + '\n'
+                        text += headingsHtmlClose[i] + '\n'
                         break
 
             html.write(text)
