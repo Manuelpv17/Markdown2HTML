@@ -21,10 +21,14 @@ def markdownToHtml():
         sys.exit(1)
 
     headingsHtml = ["<h1>", "<h2>", "<h3>", "<h4>", "<h5>", "<h6>"]
-    headingsHtmlClose = ["</h1>", "</h2>", "</h3>", "</h4>", "</h5>", "</h6>"]
+    headingsHtmlEnd = ["</h1>", "</h2>", "</h3>", "</h4>", "</h5>", "</h6>"]
     headingsMarkdown = ["# ", "## ", "### ", "#### ", "##### ", "###### "]
+    listMarkdown = ["- "]
+    listHtml = ["<ul>", "<li>"]
+    listHtmlEnd = ["</ul>", "</li>"]
 
     text = ""
+    ul_flag = 0
     with open("{}".format(markdownFile), "r") as markdown:
         with open("{}".format(outputFile), "w+") as html:
             for line in markdown.read().split("\n"):
@@ -32,8 +36,16 @@ def markdownToHtml():
                     if headingsMarkdown[i] in line:
                         text += line.replace(
                             headingsMarkdown[i], headingsHtml[i])
-                        text += headingsHtmlClose[i] + '\n'
+                        text += headingsHtmlEnd[i] + '\n'
                         break
+                if listMarkdown[0] in line:
+                    if ul_flag == 0:
+                        text += listHtml[0] + '\n'
+                    ul_flag = 1
+                    text += line.replace(listMarkdown[0], listHtml[1])
+                    text += listHtmlEnd[1] + '\n'
+                elif listMarkdown[0] not in line and ul_flag == 1:
+                    text += listHtmlEnd[0] + '\n'
 
             html.write(text)
 
