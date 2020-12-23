@@ -46,6 +46,7 @@ def markdownToHtml():
                     text += listHtmlEnd[1] + '\n'
                 elif listMarkdown[0] not in line and ul_flag == 1:
                     text += listHtmlEnd[0] + '\n'
+                    ul_flag = 0
 
             html.write(text)
 
