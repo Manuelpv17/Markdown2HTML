@@ -2,6 +2,7 @@
 """ It’s time to code a Markdown to HTML! """
 
 import sys
+import hashlib
 
 
 def markdownToHtml():
@@ -28,6 +29,7 @@ def markdownToHtml():
         with open("{}".format(outputFile), "w+") as html:
             for line in markdown.read().split("\n"):
                 aux_text = text
+                line = translate(line)
                 line = bold_emphasis(line)
                 text = titles(text, line)
                 text, flag_ul = ul(text, line, flag_ul)
@@ -38,6 +40,25 @@ def markdownToHtml():
             html.write(text)
 
     sys.exit(0)
+
+
+def translate(line):
+    translateMarkdown = ["[[", "(("]
+    translateMarkdownEnd = ["]]", "))"]
+    for i in range(len(translateMarkdown)):
+        if translateMarkdown[i] in line and translateMarkdownEnd[i] in line:
+            start = line.find(translateMarkdown[i]) + 2
+            end = line.find(translateMarkdownEnd[i])
+            if i == 0:
+                line = line.replace(line[start:end], hashlib.md5(
+                    line[start:end].encode('utf-8')).hexdigest())
+            elif i == 1:
+                line = line.replace("c", "")
+                line = line.replace("C", "")
+            line = line.replace(translateMarkdown[i], "")
+            line = line.replace(translateMarkdownEnd[i], "")
+
+    return line
 
 
 def bold_emphasis(line):
