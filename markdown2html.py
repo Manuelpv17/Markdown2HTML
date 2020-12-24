@@ -44,7 +44,7 @@ def markdownToHtml():
 def p(text, line, flag):
     pHtml = ["<p>"]
     pHtmlEnd = ["</p>"]
-    breakHtml = ["</br>"]
+    breakHtml = ["<br/>"]
 
     if flag == 2:
         text += pHtmlEnd[0] + '\n'
