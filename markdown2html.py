@@ -28,8 +28,6 @@ def markdownToHtml():
         with open("{}".format(outputFile), "w+") as html:
             for line in markdown.read().split("\n"):
                 aux_text = text
-                if line and flag_p == 1 and line[0] in ["*", "#", "-"]:
-                    text, flag_p = p(text, line, 2)
                 text = titles(text, line)
                 text, flag_ul = ul(text, line, flag_ul)
                 text, flag_ol = ol(text, line, flag_ol)
