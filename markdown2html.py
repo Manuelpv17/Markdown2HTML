@@ -53,8 +53,10 @@ def translate(line):
                 line = line.replace(line[start:end], hashlib.md5(
                     line[start:end].encode('utf-8')).hexdigest())
             elif i == 1:
-                line = line.replace("c", "")
-                line = line.replace("C", "")
+                line = line[:start] + \
+                    line[start:end].replace("c", "") + line[end:]
+                line = line[:start] + \
+                    line[start:end].replace("C", "") + line[end:]
             line = line.replace(translateMarkdown[i], "")
             line = line.replace(translateMarkdownEnd[i], "")
 
