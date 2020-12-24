@@ -29,6 +29,7 @@ def markdownToHtml():
             for line in markdown.read().split("\n"):
                 aux_text = text
                 text = titles(text, line)
+                line = bold_emphasis(line)
                 text, flag_ul = ul(text, line, flag_ul)
                 text, flag_ol = ol(text, line, flag_ol)
                 if aux_text == text:
@@ -37,6 +38,17 @@ def markdownToHtml():
             html.write(text)
 
     sys.exit(0)
+
+
+def bold_emphasis(line):
+    b_emHtml = ["<b>", "<em>"]
+    b_emHtmlEnd = ["</b>", "</em>"]
+    b_emMarkdown = ["**", "__"]
+    for i in range(len(b_emHtml)):
+        if b_emMarkdown[i] in line:
+            line = line.replace(b_emMarkdown[i], b_emHtml[i], 1)
+            line = line.replace(b_emMarkdown[i], b_emHtmlEnd[i])
+    return line
 
 
 def p(text, line, flag):
